@@ -1,0 +1,37 @@
+import { useRef } from "react";
+import {useDispatch , useSelector} from "react-redux";
+
+
+export default function Questions ({onChecked}){
+   if (isLoading) return <h3 className="text-light">Loading...</h3>;
+    if (serverError)
+        return <h3 className="text-light">{serverError || "Unknown Error"}</h3>;
+
+    if (!questions) return <h3 className="text-light">No questions available</h3>;
+
+    return (
+        <div className="questions">
+            <h2 className="text-light">{questions?.question}</h2>
+            <ul key={questions?.id}>
+                {questions?.options.map((q, i) => (
+                    <li key={i}>
+                        <input
+                            type="radio"
+                            value={i}
+                            name={`options-${questions.id}`}
+                            id={`q${i}-option`}
+                            onChange={() => onSelect(i)}
+                            checked={result[trace] === i}
+                        />
+                        <label className="text-primary" htmlFor={`q${i}-option`}>
+                            {q}
+                        </label>
+                        <div
+                            className={`check ${result[trace] === i ? "checked" : ""}`}
+                        ></div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
